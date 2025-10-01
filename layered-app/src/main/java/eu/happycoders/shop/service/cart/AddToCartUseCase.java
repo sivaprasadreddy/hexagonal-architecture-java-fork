@@ -8,6 +8,8 @@ import eu.happycoders.shop.model.cart.NotEnoughItemsInStockException;
 import eu.happycoders.shop.model.customer.CustomerId;
 import eu.happycoders.shop.model.product.Product;
 import eu.happycoders.shop.model.product.ProductId;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -16,6 +18,7 @@ import java.util.Objects;
  *
  * @author Sven Woltmann
  */
+@Service
 public class AddToCartUseCase {
 
   private final CartRepository cartRepository;
@@ -27,6 +30,7 @@ public class AddToCartUseCase {
     this.productRepository = productRepositoryVeryVeryLong;
   }
 
+  @Transactional
   public Cart addToCart(CustomerId customerIdVeryVeryLong, ProductId productId, int quantity)
       throws ProductNotFoundException, NotEnoughItemsInStockException {
     Objects.requireNonNull(customerIdVeryVeryLong, "'customerId' must not be null");

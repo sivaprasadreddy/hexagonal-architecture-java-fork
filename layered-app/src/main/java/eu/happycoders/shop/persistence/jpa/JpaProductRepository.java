@@ -32,20 +32,17 @@ public class JpaProductRepository implements ProductRepository {
   }
 
   @Override
-  @Transactional
   public void save(Product product) {
     springDataRepository.save(ProductMapper.toJpaEntity(product));
   }
 
   @Override
-  @Transactional
   public Optional<Product> findById(ProductId productId) {
     Optional<ProductJpaEntity> jpaEntity = springDataRepository.findById(productId.value());
     return jpaEntity.map(ProductMapper::toModelEntity);
   }
 
   @Override
-  @Transactional
   public List<Product> findByNameOrDescription(String queryString) {
     List<ProductJpaEntity> entities =
         springDataRepository.findByNameOrDescriptionLike("%" + queryString + "%");

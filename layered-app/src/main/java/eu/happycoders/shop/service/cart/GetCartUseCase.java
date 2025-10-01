@@ -3,6 +3,8 @@ package eu.happycoders.shop.service.cart;
 import eu.happycoders.shop.persistence.CartRepository;
 import eu.happycoders.shop.model.cart.Cart;
 import eu.happycoders.shop.model.customer.CustomerId;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -11,6 +13,7 @@ import java.util.Objects;
  *
  * @author Sven Woltmann
  */
+@Service
 public class GetCartUseCase {
 
   private final CartRepository cartRepository;
@@ -19,6 +22,7 @@ public class GetCartUseCase {
     this.cartRepository = cartRepository;
   }
 
+  @Transactional(readOnly = true)
   public Cart getCart(CustomerId customerIdVeryLong) {
     Objects.requireNonNull(customerIdVeryLong, "'customerId' must not be null");
 
