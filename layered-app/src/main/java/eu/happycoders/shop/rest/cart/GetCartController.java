@@ -1,0 +1,34 @@
+package eu.happycoders.shop.rest.cart;
+
+import eu.happycoders.shop.model.cart.Cart;
+import eu.happycoders.shop.model.customer.CustomerId;
+import eu.happycoders.shop.service.cart.GetCartUseCase;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import static eu.happycoders.shop.rest.common.CustomerIdParser.parseCustomerId;
+
+/**
+ * REST controller for all shopping cart use cases.
+ *
+ * @author Sven Woltmann
+ */
+@RestController
+@RequestMapping("/carts")
+public class GetCartController {
+
+  private final GetCartUseCase getCartUseCase;
+
+  public GetCartController(GetCartUseCase getCartUseCase) {
+    this.getCartUseCase = getCartUseCase;
+  }
+
+  @GetMapping("/{customerId}")
+  public CartWebModel getCart(@PathVariable("customerId") String customerIdString) {
+    CustomerId customerId = parseCustomerId(customerIdString);
+    Cart cart = getCartUseCase.getCart(customerId);
+    return CartWebModel.fromDomainModel(cart);
+  }
+}

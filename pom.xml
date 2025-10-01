@@ -21,6 +21,7 @@
         <module>application</module>
         <module>adapter</module>
         <module>bootstrap</module>
+        <module>layered-app</module>
     </modules>
 
     <properties>
